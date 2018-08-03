@@ -20,10 +20,6 @@
 .Line{
 	margin-top: -20px;
 }
-
-
-
-
 		</style>
 	</head>
 	<body>
@@ -70,16 +66,16 @@
 						<li class="active"><a href="Dashboard.php">
 							<span class="glyphicon glyphicon-th"></span>
 						&nbsp;Dashboard</a></li>
-						<li><a href="AddNewPost.php">
+						<!-- <li><a href="AddNewPost.php">
 							<span class="glyphicon glyphicon-list-alt"></span>
 						&nbsp;Add New Record</a></li>
-						<li><a href="Categories.php">
+ -->						<!-- <li><a href="Categories.php">
 							<span class="glyphicon glyphicon-tags"></span>
-						&nbsp;Categories</a></li>
-						<li><a href="#">
+						&nbsp;Categories</a></li> -->
+						<li><a href="Admins.php">
 							<span class="glyphicon glyphicon-user"></span>
 						&nbsp;Manage Admins</a></li>
-						<li><a href="#">
+						<!-- <li><a href="#">
 							<span class="glyphicon glyphicon-comment"></span>
 						&nbsp;Comments
 						<?php
@@ -96,15 +92,10 @@
 			</span>
 
 		<?php } ?>
-
-
-
-
-
 					</a></li>
 						<li><a href="#">
 							<span class="glyphicon glyphicon-equalizer"></span>
-						&nbsp;Live Blog</a></li>
+						&nbsp;Live Blog</a></li> -->
 						<li><a href="Logout.php">
 							<span class="glyphicon glyphicon-log-out"></span>
 						&nbsp;Logout</a></li>
@@ -115,19 +106,19 @@
 				<div class="col-sm-10"><!-- Main -->
 					<div><?php echo Message();
 					echo SuccessMessage(); ?></div>
-					<h1>Admin Dashboard</h1>
+					<h1>Patients Details</h1>
 					<div class="table-responsive">
 						<table class="table table-striped table-hover">
 							<tr>
 								<th>No</th>
 								<th>Name</th>
 								<th>Date &Time</th>
-								<th>Admin</th>
-								<th>Category</th>
-								<th>Banner</th>
-								<th>Comments</th>
+								<!-- <th>Admin</th> -->
+								<!-- <th>Category</th> -->
+								<th>Image</th>
+								<!-- <th>Comments</th> -->
 								<th>Action</th>
-								<th>Details</th>
+								<!-- <th>Details</th> -->
 							</tr>
 <?php
 $ConnectingDB;
@@ -138,7 +129,7 @@ while ($DataRows=mysql_fetch_array($Execute)) {
 	$Id=$DataRows["id"];
 	$DateTime=$DataRows["datetime"];
 	$Title=$DataRows["title"];
-	$Category=$DataRows["category"];
+	// $Category=$DataRows["category"];
 	$Admin=$DataRows["author"];
 	$Image=$DataRows["image"];
 	$Post=$DataRows["post"];
@@ -154,15 +145,15 @@ while ($DataRows=mysql_fetch_array($Execute)) {
 			<?php
 		if(strlen($DateTime)>11){$DateTime=substr($DateTime,0,11).'..';}
 		 echo $DateTime; ?></td>
-		<td>
+		<!-- <td>
 			<?php
 		if(strlen($Admin)>6){$Admin=substr($Admin,0,6).'..';}
-		 echo $Admin; ?></td>
-		<td><?php 
+		 echo $Admin; ?></td> -->
+		<!-- <td><?php 
 		if(strlen($Category)>8){$Category=substr($Category,0,15);}
-		echo $Category; ?></td>
+		echo $Category; ?></td> -->
 		<td><img src="Upload/<?php echo $Image; ?>" width="170px;" height="50px;"></td>
-		<td>
+		<!-- <td>
 			<?php
 			$ConnectingDB;
 			$QueryApproved="SELECT COUNT(*) FROM comments WHERE admin_panel_id='$Id' AND status='ON'";
@@ -191,13 +182,13 @@ while ($DataRows=mysql_fetch_array($Execute)) {
 			</span>
 
 		<?php } ?>
-		</td>
+		</td> -->
 		<td>
-		<a href="EditPost.php?Edit=<?php echo $Id; ?>">
-		<span class="btn btn-warning">	Edit</span></a> 
+		<!-- <a href="EditPost.php?Edit=<?php echo $Id; ?>">
+		<span class="btn btn-warning">	Edit</span></a>  -->
 		<a href="DeletePost.php?Delete=<?php echo $Id; ?>"><span class="btn btn-danger">	Delete</span></a>
 	</td>
-		<td><a href="Post.php?id=<?php echo $Id; ?>" target="_blank"><span class="btn btn-primary">Live Preview</span></td>
+		<!-- <td><a href="Post.php?id=<?php echo $Id; ?>" target="_blank"><span class="btn btn-primary">Live Preview</span></td> -->
 	</tr>
 
 <?php } ?>
@@ -211,6 +202,13 @@ while ($DataRows=mysql_fetch_array($Execute)) {
 			</div><!-- ROW -->
 		</div><!-- Container Fluid -->
 		<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
 					<br>
 					<br>
 					<br>

@@ -14,7 +14,7 @@ if(empty($Email) || empty($Password)){
  		if(ConfirmingAccountActiveStatus()){
  		$Found_Account=Login_Attempts($Email,$Password);
  		if($Found_Account){
- 		Redirect_to("index.php");	
+ 		Redirect_to("AddNewPost.php");	
  		}else{
  		$_SESSION["ErrorMessage"]="Invalid Email / Password";
 	Redirect_to("User_Login.php");
