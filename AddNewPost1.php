@@ -1,18 +1,21 @@
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("include/Sessions.php"); ?>
 <?php require_once("include/Functions.php"); ?>
-<?php Confirm_Login(); ?>
+<!-- <?php Confirm_Login(); ?> -->
 <?php
 if(isset($_POST["Submit"])){
 $Title=mysql_real_escape_string($_POST["Title"]);
-//$Category=mysql_real_escape_string($_POST["Category"]);
+$Adhar=mysql_real_escape_string($_POST["Adhar"]);
+$Phone=mysql_real_escape_string($_POST["Phone"]);
+$Category=mysql_real_escape_string($_POST["Category"]);
 $Post=mysql_real_escape_string($_POST["Post"]);
 date_default_timezone_set("Asia/kolkata");
 $CurrentTime=time();
 //$DateTime=strftime("%Y-%m-%d %H-%M:%S",$CurrentTime);
 $DateTime=strftime("%B-%d-%Y %H-%M:%S",$CurrentTime);
 $DateTime;
-$Admin="JOY";
+$Admin=$_SESSION["Username"];
+
 $Image=$_FILES["Image"]["name"];
 $Target="‪Uploads/".basename($_FILES["Image"]["name"]);
 if(isset($_POST['Submit'])){
@@ -24,21 +27,33 @@ if(isset($_POST['Submit'])){
 	
 
 }
+if(empty($Title) || empty($Category) || empty($Adhar)){
+	$_SESSION["ErrorMessage"]="All fields must be filled";
+	Redirect_to("AddNewPost.php");
+
+ }elseif(strlen($Category)<2){
+ 	$_SESSION["ErrorMessage"]="Title should be at-least 2 characters";
+ 	Redirect_to("AddNewPost.php");
+
+ }elseif(strlen($Adhar)<11){
+ 	$_SESSION["ErrorMessage"]="Adhar Number should be at-least 12 characters";
+ 	Redirect_to("AddNewPost.php");
+
+ }else{
 	global $ConnectingDB;
-	$DeleteFromURL=$_GET['Delete'];
-	$Query="DELETE FROM admin_panel WHERE id='$DeleteFromURL' ";
+	$Query="INSERT INTO admin_panel(author,image,post,datetime,title,category,adhar,phone) VALUES('$Admin','$Image','$Post','$DateTime','$Title','$Category','$Adhar','$Phone')";
 	$Execute=mysql_query($Query);
 	move_uploaded_file($_FILES["Image"]["temp_name"],$Target);
 	 move_uploaded_file($filetmp, $filepath);
 
 	if($Execute){
-		$_SESSION["SuccessMessage"] = "Post Deleted Successfully";
-		Redirect_to("Dashboard.php");
+		$_SESSION["SuccessMessage"] = "Record Added Successfully";
+		Redirect_to("AddNewPost.php");
 	}else{
 		$_SESSION["ErrorMessage"]="Failed to add";
- 	Redirect_to("Dashboard.php");
+ 	Redirect_to("AddNewPost.php");
 	}
-
+}
 }
 
 ?>
@@ -47,7 +62,7 @@ if(isset($_POST['Submit'])){
 <!DOCTYPE>
 <html>
 	<head>
-		<title>Delete Post</title>
+		<title>Add New Post</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script scr="js/bootstrap.min.js"></script>
@@ -58,7 +73,9 @@ if(isset($_POST['Submit'])){
 				font-family: Bitter,Georgia,"Times New Roman",Times,serif;
 				font-size: 1.2em;
 			}
-
+		body{
+			background-color: #ffffff;
+		}
 
 		</style>
 	</head>
@@ -90,8 +107,8 @@ if(isset($_POST['Submit'])){
 				</div>
 				<button class="btn btn-default" name="SearchButton">Go</button>
 			</form>
-		</div>
-			</div> -->
+		</div> -->
+			</div>
 
 
 
@@ -99,99 +116,96 @@ if(isset($_POST['Submit'])){
 		<div class="Line" style="height: 10px; background: #27aae1;"></div>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-2">
-					<br>
-					<br>
-					<!-- <h1>Blocked Reviewer</h1> -->
+				<!-- <div class="col-sm-2">
+					<h1>Blocked Reviewer</h1> 
 					<ul  id="side_Menu" class="nav nav-pills nav-stacked">
 						<li><a href="Dashboard.php">
 							<span class="glyphicon glyphicon-th"></span>
 						&nbsp;Dashboard</a></li>
-						<!-- <li class="active"><a href="AddNewPost.php">
+						<li class="active"><a href="AddNewPost.php">
 							<span class="glyphicon glyphicon-list-alt"></span>
-						&nbsp;Add New Record</a></li> -->
-						<!-- <li ><a href="Categories.php">
+						&nbsp;Add New Post</a></li>
+						<li ><a href="Categories.php">
 							<span class="glyphicon glyphicon-tags"></span>
-						&nbsp;Categories</a></li> -->
+						&nbsp;Categories</a></li>
 						<li><a href="Admins.php">
 							<span class="glyphicon glyphicon-user"></span>
 						&nbsp;Manage Admins</a></li>
-						<!-- <li><a href="Comments.php">
+						<li><a href="Comments.php">
 							<span class="glyphicon glyphicon-comment"></span>
 						&nbsp;Comments</a></li>
 						<li><a href="#">
 							<span class="glyphicon glyphicon-equalizer"></span>
-						&nbsp;Live Blog</a></li> -->
+						&nbsp;Live Blog</a></li>
 						<li><a href="Logout.php">
 							<span class="glyphicon glyphicon-log-out"></span>
 						&nbsp;Logout</a></li>
 					</ul>
 
 
-				</div><!-- ENDING OF SIDE -->
-				<div class="col-sm-10">
-					<h1>Delete Post</h1>
+				</div> ENDING OF SIDE -->
+				<div class="col-sm-offset-4 col-sm-4">
+					<h1>Add New Record</h1>
 					<?php echo Message();
 					echo SuccessMessage();
 					?>
 						<div >
-							<?php 
-							$SearchQueryParameter=$_GET['Delete'];
-							$ConnectingDB;
-							$Query="SELECT * FROM admin_panel WHERE id='$SearchQueryParameter'";
-							$ExecuteQuery=mysql_query($Query);
-							while ($DataRows=mysql_fetch_array($ExecuteQuery)) {
-								$TitleToBeUpdated=$DataRows['title'];
-								$CategoryToBeUpdated=$DataRows['category'];
-								$ImageToBeUpdated=$DataRows['image'];
-								$PostToBeUpdated=$DataRows['post'];
-							}
-
-							?>
-							<form action="DeletePost.php?Delete=<?php echo $SearchQueryParameter; ?>" method="Post" enctype="multipart/form-data">
+							<form action="AddNewPost.php" method="Post" enctype="multipart/form-data">
 								<fieldset>
 									<div class="form-group">
 									<label for="title"><span class="FieldInfo">Name:</span></label>
-									<input disabled value="<?php echo $TitleToBeUpdated; ?>" class="form-control" type="text" name="Title" id="categoryname" placeholder="Title">
+									<input class="form-control" type="text" name="Title" id="categoryname" placeholder="Name">
+								</div>
+								<div class="form-group">
+									<label for="title"><span class="FieldInfo">Adhar Number:</span></label>
+									<input class="form-control" type="text" name="Adhar" id="adhar" placeholder="Adhar No">
+								</div>
+								<div class="form-group">
+									<label for="title"><span class="FieldInfo">Phone Number:</span></label>
+									<input class="form-control" type="text" name="Phone" id="phone" placeholder="Phone No">
 								</div>
 								<!-- <div class="form-group">
-									<span class="FieldInfo">Existing Category:</span>
-									<?php echo $CategoryToBeUpdated; ?>
-									<br>
+									<label for="title"><span class="FieldInfo">Date Of Birth:</span></label>
+									<input class="form-control" type="date" name="Dob" id="dob" placeholder="Date Of Birth">
+								</div>
+								<div class="form-group">
+									<label for="title"><span class="FieldInfo">Gender:</span></label>
+									<select class="element select medium" id="element_8" name="element_8" required> 
+									<option value="" selected="selected"></option>
+									<option value="1" >Male</option>
+									<option value="2" >Female</option>
+									<option value="3" >Third Gender</option>
+
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="title"><span class="FieldInfo">Address</span></label>
+									<input class="form-control" type="text" name="Address" id="address" placeholder="Address">
+								</div> -->
+								<!-- <div class="form-group">
 									<label for="categoryselect"><span class="FieldInfo">Category:</span></label>
-									<select disabled class="form-control" id="categoryselect" name="Category">
-																		<?php
+									<select class="form-control" id="categoryselect" name="Category">
+								<?php
 								global $ConnectingDB;
 								$ViewQuery="SELECT * FROM category ORDER BY datatime desc";
 								$Execute=mysql_query($ViewQuery);
 								while($DataRows =mysql_fetch_array($Execute)) {
 									$Id=$DataRows["id"];
-									$CategoryName=$DataRows["name"];
-									
-?>
-					<option><?php echo $CategoryName; ?></option>
-					<?php } ?>
-
-
-
-
-
-									</select>
+									$CategoryName=$DataRows["name"];	
+								?>
+								<option><?php echo $CategoryName; ?></option>
+								<?php } ?>
+								</select>
 								</div> -->
 								<div class="form-group">
-									<span class="FieldInfo">Existing Image:</span>
-									<img src="Upload/<?php echo $ImageToBeUpdated; ?>" width="170px;" height="50px";> 
-									<br>
-									<label for="imageselect"><span class="FieldInfo">Select Image:</span></label>
-									<input disabled type="file" class="form-control" name="Image" id="imageselect">
+									<label for="imageselect"><span class="FieldInfo">Upload Image:</span></label>
+									<input type="file" class="form-control" name="Image" id="imageselect">
 
 									<div class="form-group">
-									<label for="postarea"><span class="FieldInfo">Post:</span></label>
-									<textarea disabled class="form-control" name="Post" id="postarea">
-										<?php echo "$PostToBeUpdated"; ?>
-									</textarea>
+									<label for="postarea"><span class="FieldInfo">Medical Details</span></label>
+									<textarea class="form-control" name="Post" id="postarea"></textarea>
 								<br>
-								<input  class="btn btn-danger btn-block" type="Submit" name="Submit" value="Delete Post">
+								<input  class="btn btn-success btn-block" type="Submit" name="Submit" value="Add New Post">
 								</fieldset>	
 
 
@@ -214,10 +228,10 @@ if(isset($_POST['Submit'])){
 			</div><!-- ROW -->
 		</div><!-- Container Fluid -->
 		<div id="Footer">
-			<hr><p>BLOCKED REVIEWER |  JOY RAKESH  | &copy;2018-2020 ---- All Rights Reserved.</p>
+			<hr><p>Electronic Health Record Managment |  EHRM  | &copy;2018-2020 ---- All Rights Reserved.</p>
 			<a style="color: white; text-decoration: none; cursor: pointer; font-weight: bold;">
 				<p>
-					This is a site for reviewing products.
+					This is a site for managing health records.
 				</p>
 			</a>
 		</div>
