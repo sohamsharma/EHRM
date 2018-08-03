@@ -1,12 +1,16 @@
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("include/Sessions.php"); ?>
 <?php require_once("include/Functions.php"); ?>
-<?php Confirm_Login(); ?>
+<!-- <?php Confirm_Login(); ?> -->
 <?php
 if(isset($_POST["Submit"])){
 $Title=mysql_real_escape_string($_POST["Title"]);
 $Adhar=mysql_real_escape_string($_POST["Adhar"]);
-$Category=mysql_real_escape_string($_POST["Category"]);
+$Phone=mysql_real_escape_string($_POST["Phone"]);
+$Dob=mysql_real_escape_string($_POST["Dob"]);
+$Gender=mysql_real_escape_string($_POST["Gender"]);
+$Address=mysql_real_escape_string($_POST["Address"]);
+//$Category=mysql_real_escape_string($_POST["Category"]);
 $Post=mysql_real_escape_string($_POST["Post"]);
 date_default_timezone_set("Asia/kolkata");
 $CurrentTime=time();
@@ -26,12 +30,12 @@ if(isset($_POST['Submit'])){
 	
 
 }
-if(empty($Title) || empty($Category) || empty($Adhar)){
+if(empty($Title) || empty($Adhar) || empty($Phone) || empty($Dob) || empty($Gender) || empty($Address)){
 	$_SESSION["ErrorMessage"]="All fields must be filled";
 	Redirect_to("AddNewPost.php");
 
- }elseif(strlen($Category)<2){
- 	$_SESSION["ErrorMessage"]="Title should be at-least 2 characters";
+ }elseif(strlen($Phone)<10){
+ 	$_SESSION["ErrorMessage"]="Phone should be at-least 10 characters";
  	Redirect_to("AddNewPost.php");
 
  }elseif(strlen($Adhar)<11){
@@ -40,14 +44,14 @@ if(empty($Title) || empty($Category) || empty($Adhar)){
 
  }else{
 	global $ConnectingDB;
-	$Query="INSERT INTO admin_panel(author,image,post,datetime,title,category,adhar) VALUES('$Admin','$Image','$Post','$DateTime','$Title','$Category','$Adhar')";
+	$Query="INSERT INTO admin_panel(author,image,post,datetime,title,category,adhar,phone,dob,gender,address) VALUES('$Admin','$Image','$Post','$DateTime','$Title','$Category','$Adhar','$Phone','$Dob','$Gender','$Address')";
 	$Execute=mysql_query($Query);
 	move_uploaded_file($_FILES["Image"]["temp_name"],$Target);
 	 move_uploaded_file($filetmp, $filepath);
 
 	if($Execute){
-		$_SESSION["SuccessMessage"] = "Post Added Successfully";
-		Redirect_to("AddNewPost.php");
+		$_SESSION["SuccessMessage"] = "Record Added Successfully";
+		Redirect_to("index.php");
 	}else{
 		$_SESSION["ErrorMessage"]="Failed to add";
  	Redirect_to("AddNewPost.php");
@@ -61,7 +65,7 @@ if(empty($Title) || empty($Category) || empty($Adhar)){
 <!DOCTYPE>
 <html>
 	<head>
-		<title>Add New Post</title>
+		<title>Add Patients Details</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script scr="js/bootstrap.min.js"></script>
@@ -72,7 +76,9 @@ if(empty($Title) || empty($Category) || empty($Adhar)){
 				font-family: Bitter,Georgia,"Times New Roman",Times,serif;
 				font-size: 1.2em;
 			}
-
+		body{
+			background-color: #ffffff;
+		}
 
 		</style>
 	</head>
@@ -113,8 +119,8 @@ if(empty($Title) || empty($Category) || empty($Adhar)){
 		<div class="Line" style="height: 10px; background: #27aae1;"></div>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-2">
-					<!-- <h1>Blocked Reviewer</h1> -->
+				<!-- <div class="col-sm-2">
+					<h1>Blocked Reviewer</h1> 
 					<ul  id="side_Menu" class="nav nav-pills nav-stacked">
 						<li><a href="Dashboard.php">
 							<span class="glyphicon glyphicon-th"></span>
@@ -140,9 +146,9 @@ if(empty($Title) || empty($Category) || empty($Adhar)){
 					</ul>
 
 
-				</div><!-- ENDING OF SIDE -->
-				<div class="col-sm-10">
-					<h1>Add New Record</h1>
+				</div> ENDING OF SIDE -->
+				<div class="col-sm-offset-4 col-sm-4">
+					<h1>Enter the Patients Details</h1>
 					<?php echo Message();
 					echo SuccessMessage();
 					?>
@@ -154,39 +160,56 @@ if(empty($Title) || empty($Category) || empty($Adhar)){
 									<input class="form-control" type="text" name="Title" id="categoryname" placeholder="Name">
 								</div>
 								<div class="form-group">
-									<label for="title"><span class="FieldInfo">Adhar Number:</span></label>
+									<label for="title"><span class="FieldInfo">Aadhaar Number:</span></label>
 									<input class="form-control" type="text" name="Adhar" id="adhar" placeholder="Adhar No">
 								</div>
 								<div class="form-group">
+									<label for="title"><span class="FieldInfo">Phone Number:</span></label>
+									<input class="form-control" type="text" name="Phone" id="phone" placeholder="Phone No">
+								</div>
+								<div class="form-group">
+									<label for="title"><span class="FieldInfo">Date Of Birth:</span></label>
+									<input class="form-control" type="date" name="Dob" id="dob" placeholder="Date Of Birth">
+								</div>
+								<div class="form-group">
+									<label for="title"><span class="FieldInfo">Gender:</span></label>
+									<select class="element select medium" id="gender" name="Gender" required> 
+									<option value="" selected="selected"></option>
+									<option value="1" >Male</option>
+									<option value="2" >Female</option>
+									<option value="3" >Third Gender</option>
+
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="title"><span class="FieldInfo">Address</span></label>
+									<input class="form-control" type="text" name="Address" id="address" placeholder="Address">
+								</div>
+
+								<!-- <div class="form-group">
 									<label for="categoryselect"><span class="FieldInfo">Category:</span></label>
 									<select class="form-control" id="categoryselect" name="Category">
-																		<?php
+								<?php
 								global $ConnectingDB;
 								$ViewQuery="SELECT * FROM category ORDER BY datatime desc";
 								$Execute=mysql_query($ViewQuery);
 								while($DataRows =mysql_fetch_array($Execute)) {
 									$Id=$DataRows["id"];
-									$CategoryName=$DataRows["name"];
-									
-?>
-					<option><?php echo $CategoryName; ?></option>
-					<?php } ?>
-
-
-
-
-
-									</select>
-								</div>
+									$CategoryName=$DataRows["name"];	
+								?>
+								<option><?php echo $CategoryName; ?></option>
+								<?php } ?>
+								</select>
+								</div> -->
 								<div class="form-group">
 									<label for="imageselect"><span class="FieldInfo">Select Image:</span></label>
 									<input type="file" class="form-control" name="Image" id="imageselect">
 
 									<div class="form-group">
-									<label for="postarea"><span class="FieldInfo">Post:</span></label>
+									<label for="postarea"><span class="FieldInfo">Medical Record:</span></label>
 									<textarea class="form-control" name="Post" id="postarea"></textarea>
 								<br>
-								<input  class="btn btn-success btn-block" type="Submit" name="Submit" value="Add New Post">
+								<input  class="btn btn-success btn-block" type="Submit" name="Submit" value="Submit">
 								</fieldset>	
 
 

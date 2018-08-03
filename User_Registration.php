@@ -121,7 +121,7 @@ if(empty($Username) || empty($Email) || empty($Password) || empty($Adhar) || emp
 									</div>
 								</div>
 								<div class="form-group">
-										<label for="Adhar"><span class="FieldInfo">AdharNumber:</span></label>
+										<label for="Adhar"><span class="FieldInfo">AadharNumber:</span></label>
 									<div class="input-group input-group-lg" >
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-star text-primary"></span>
@@ -155,6 +155,14 @@ if(empty($Username) || empty($Email) || empty($Password) || empty($Adhar) || emp
 											</span>
 									<input class="form-control" type="Password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm Password">
 								</div>
+								<!-- <div class="form-group">
+									<label for="imageselect"><span class="FieldInfo">Select Image:</span></label>
+									<input type="file" class="form-control" name="Image" id="imageselect">
+								</div>
+									<div class="form-group">
+									<label for="postarea"><span class="FieldInfo">Health Info:</span></label>
+									<textarea class="form-control" name="Post" id="postarea"></textarea>
+								</div> -->
 								<br>
 								<input  class="btn btn-info btn-block" type="Submit" name="Submit" value="Register">
 								</fieldset>	

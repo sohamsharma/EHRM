@@ -100,26 +100,28 @@ if(empty($Username || empty($Password) || empty($ConfirmPassword))){
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-2">
+					<br>
+					<br>
 					<!-- <h1>Blocked Reviewer</h1> -->
 					<ul  id="side_Menu" class="nav nav-pills nav-stacked">
 						<li><a href="Dashboard.php">
 							<span class="glyphicon glyphicon-th"></span>
 						&nbsp;Dashboard</a></li>
-						<li><a href="AddNewPost.php">
+						<!-- <li><a href="AddNewPost.php">
 							<span class="glyphicon glyphicon-list-alt"></span>
-						&nbsp;Add New Record</a></li>
-						<li><a href="Categories.php">
+						&nbsp;Add New Record</a></li> -->
+						<!-- <li><a href="Categories.php">
 							<span class="glyphicon glyphicon-tags"></span>
-						&nbsp;Categories</a></li>
+						&nbsp;Categories</a></li> -->
 						<li class="active"><a href="Admins.php">
 							<span class="glyphicon glyphicon-user"></span>
 						&nbsp;Manage Admins</a></li>
-						<li><a href="Comments.php">
+						<!-- <li><a href="Comments.php">
 							<span class="glyphicon glyphicon-comment"></span>
 						&nbsp;Comments</a></li>
 						<li><a href="#">
 							<span class="glyphicon glyphicon-equalizer"></span>
-						&nbsp;Live Blog</a></li>
+						&nbsp;Live Blog</a></li> -->
 						<li><a href="Logout.php">
 							<span class="glyphicon glyphicon-log-out"></span>
 						&nbsp;Logout</a></li>

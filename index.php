@@ -41,8 +41,8 @@
                                     <li><a class="menu active" href="#home">Home</a></li>
                                     <li><a class="menu" href="#about">Medical Info</a></li>
                                     <li><a class="menu" href="#service">Insurance Details</a></li>
-                                    <li><a class="menu" href="#contact">Register</a></li>
-                                    <li><a class="menu" href="#contact">Sign-In</a></li>
+                                    <!-- <li><a class="menu" href="#contact">Register</a></li> -->
+                                    <li><a class="menu" href="User_Registration.php">Sign-Out</a></li>
                                 </ul>
                             </div><!-- /navbar-collapse -->
                         </div><!-- / .container-fluid -->
@@ -249,6 +249,7 @@
                 </div>
             </div>
         </div>
+        <link href="https://snatchbot.me/sdk/webchat.css" rel="stylesheet" type="text/css"><script src="https://snatchbot.me/sdk/webchat.min.js"></script><script> Init('?botID=25182&amp;appID=ZccN1sRvfz9TEuRFJmMA', 600, 600, 'https://dvgpba5hywmpo.cloudfront.net/media/image/xxckm0fH6RKjtoRsvHu7HgH0V', 'bubble', '#00AFF0', 90, 90, 62.99999999999999, '', '0', '#FFFFFF', 1); /* for authentication of its users, you can define your userID (add &amp;userID={login}) */ </script>
     </footer>
     <!-- script tags
     ============================================================= -->
