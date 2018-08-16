@@ -42,8 +42,14 @@
                                     <li><a class="menu" href="#about">Medical Info</a></li>
                                     <li><a class="menu" href="#service">Insurance Details</a></li>
                                     <!-- <li><a class="menu" href="#contact">Register</a></li> -->
-                                    <li><a class="menu" href="User_Registration.php">Sign-Out</a></li>
-                                </ul>
+                                    <!-- <li><a class="menu" href="User_Registration.php">Sign-Out</a></li> -->
+                                    <li><a class="menu" data-toggle="dropdown">Sign In
+                                    <span class="caret"></span>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="#">Patient</a></li>
+                                      <li><a href="#">Admin</a></li>
+                                      <li><a href="#">Others</a></li>
+                                    </ul>
                             </div><!-- /navbar-collapse -->
                         </div><!-- / .container-fluid -->
                     </nav>
