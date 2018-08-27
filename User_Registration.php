@@ -13,7 +13,13 @@ if(empty($Username) || empty($Email) || empty($Password) || empty($Adhar) || emp
 	$_SESSION["ErrorMessage"]="All Fields must be filled";
 	Redirect_to("User_Registration.php");
 
- }elseif ($Password!==$ConfirmPassword) {
+ }
+ elseif (!filter_var($Email, FILTER_VALIDATE_EMAIL))
+ {
+	$_SESSION["ErrorMessage"]="Invalid Email!";
+	Redirect_to("User_Registration.php");	
+ }
+ elseif ($Password!==$ConfirmPassword) {
  	$_SESSION["ErrorMessage"]="Both value should be same!!";
  	Redirect_to("User_Registration.php");
  }elseif (strlen($Password)<4) {
@@ -22,11 +28,22 @@ if(empty($Username) || empty($Email) || empty($Password) || empty($Adhar) || emp
  }elseif (CheckEmailExitsOrNot($Email)) {
  	$_SESSION["ErrorMessage"]="Email already in use";
  	Redirect_to("User_Registration.php");
- }elseif (strlen($Adhar)<11) {
- 	$_SESSION["ErrorMessage"]="AdharNumber should include atleast 12 values!!";
- 	Redirect_to("User_Registration.php");
- }elseif (CheckAdhar($Adhar)) {
- 	$_SESSION["ErrorMessage"]="Adhar Number already in use";
+ }
+ else if(is_numeric($Adhar)==0)
+ {
+	$_SESSION["ErrorMessage"]="Aadhar Number should be numeric!!";
+	Redirect_to("User_Registration.php");
+	}
+	else if (strlen($Adhar)<13) {
+		$_SESSION["ErrorMessage"]="Aadhar Number should include atleast 13 values!!";
+		Redirect_to("User_Registration.php");
+ }
+ else if (strlen($Adhar)>13) {
+	$_SESSION["ErrorMessage"]="Phone Number should include atleast 13 values!!";
+	Redirect_to("User_Registration.php");
+}
+elseif (CheckAdhar($Adhar)) {
+ 	$_SESSION["ErrorMessage"]="Aadhar Number already in use";
  	Redirect_to("User_Registration.php");
  }
  else{
@@ -35,23 +52,22 @@ if(empty($Username) || empty($Email) || empty($Password) || empty($Adhar) || emp
  		$Query="INSERT INTO user_panel(username,email,password,token,active,adhar)VALUES('$Username','$Email','$Hashed_Password','$Token','OFF','$Adhar')";
  		$Execute=mysql_query($Query);
  		if($Execute){
-			$subject="Confirm Account";
-			      $body='Hi'.$Username.'Here is the link to confirm your account http://localhost/PHPCMS/Activate.php?token='.$Token;
+			/* $subject="Confirm Account";
+			      $body='Hi'.$Username.'Here is the link to confirm your account http://localhost/PHPCMS/EHRM/Activate.php?token='.$Token;
 			$Sender="From:joyrakesh09@gmail.com";
 			if(mail($Email, $subject, $body, $Sender)){
 	$_SESSION["SuccessMessage"]="Check Email for Activation";
  	Redirect_to("User_Login.php");
 	}else{
-		$_SESSION["ErrorMessage"]="Something Went Wrong";
+		$_SESSION["ErrorMessage"]="Something Went Wrong"; */
  	Redirect_to("User_Login.php");
 	}
 
- 		}else{
+ 		}/* else{
  			$_SESSION["ErrorMessage"]="Error..Something Went Wrong!";
  	Redirect_to("User_Registration.php");
- 		}
+ 		} */
 	}
-}
 
 
 ?>
@@ -89,7 +105,7 @@ if(empty($Username) || empty($Email) || empty($Password) || empty($Adhar) || emp
 						<span class="icon-bar"></span>
 
 					</button> -->
-	<a class="navbar-brand" href="Blog.php"><img style="margin-top: -14px" src="images/img11.png" width="220" height="50";></a>
+	<a class="navbar-brand" href="index.php"><img style="margin-top: -14px" src="images/img11.png" width="220" height="50";></a>
 				</div>
 				<div class="collapse navbar-collapse" id="collapse">
 		</div>
@@ -112,7 +128,7 @@ if(empty($Username) || empty($Email) || empty($Password) || empty($Adhar) || emp
 							<form action="User_Registration.php" method="Post">
 								<fieldset>
 									<div class="form-group">
-										<label for="Username"><span class="FieldInfo">UserName:</span></label>
+										<label for="Username"><span class="FieldInfo">User Name:</span></label>
 									<div class="input-group input-group-lg" >
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-user text-primary"></span>
@@ -121,12 +137,12 @@ if(empty($Username) || empty($Email) || empty($Password) || empty($Adhar) || emp
 									</div>
 								</div>
 								<div class="form-group">
-										<label for="Adhar"><span class="FieldInfo">AadharNumber:</span></label>
+										<label for="Adhar"><span class="FieldInfo">Aadhar Number:</span></label>
 									<div class="input-group input-group-lg" >
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-star text-primary"></span>
 											</span>
-									<input class="form-control"type="text" name="Adhar" id="Adhar" placeholder="AdharNumber">
+									<input class="form-control"type="text" name="Adhar" id="Adhar" placeholder="Aadhar Number">
 									</div>
 								</div>
 									<label for="Email"><span class="FieldInfo">Email:</span></label>

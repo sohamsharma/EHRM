@@ -1,8 +1,54 @@
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("include/Sessions.php"); ?>
 <?php require_once("include/Functions.php"); ?>
-<?php Confirm_Login(); ?>
+<?php Confirm_Login1(); ?>
 <?php
+if(isset($_POST["Submit1"]))
+{
+	$Aadhar=mysql_real_escape_string($_POST["aadhar"]);	
+	$Admin=$_SESSION["Username"];
+	if(empty($Aadhar)){
+		$_SESSION["ErrorMessage"]="All Fields must be filled";
+		Redirect_to("hospitals.php");
+	 }
+	 else if(is_numeric($Aadhar)==0)
+ {
+	$_SESSION["ErrorMessage"]="Aadhar Number should be numeric!!";
+	Redirect_to("hospitals.php");
+	}
+	else if (strlen($Aadhar)<13) {
+		$_SESSION["ErrorMessage"]="Aadhar Number should include atleast 13 values!!";
+		Redirect_to("hospitals.php");
+ }
+ else if (strlen($Aadhar)>13) {
+	$_SESSION["ErrorMessage"]="Phone Number should include atleast 13 values!!";
+	Redirect_to("hospitals.php");
+}
+ else{
+	global $ConnectingDB;
+	$ViewQuery="SELECT admittedto FROM user_panel WHERE adhar='$Aadhar'";
+	$Execute=mysql_query($ViewQuery);
+	while($DataRows =mysql_fetch_array($Execute)) {
+		$His=mysql_real_escape_string($DataRows["admittedto"]);
+	}
+	if($His==$Admin)
+	{
+		$_SESSION["SuccessMessage"] = "Patient Already Admitted!";
+		Redirect_to("hospitals.php");
+	}
+	else{
+	$Query="UPDATE user_panel SET admittedto='$Admin' WHERE adhar='$Aadhar'";
+	$Execute=mysql_query($Query);
+	if($Execute){
+		$_SESSION["SuccessMessage"] = "Patient Admitted Successfully";
+		Redirect_to("hospitals.php");
+	}else{
+		$_SESSION["ErrorMessage"]="Failed to Admit!";
+ 	Redirect_to("hospitals.php");
+	}
+}
+}
+}
 if(isset($_POST["Submit"])){
 $Username=mysql_real_escape_string($_POST["Username"]);
 $Password=mysql_real_escape_string($_POST["Password"]);
@@ -16,32 +62,32 @@ $Admin=$_SESSION["Username"];
 
 if(empty($Username || empty($Password) || empty($ConfirmPassword))){
 	$_SESSION["ErrorMessage"]="All Fields must be filled";
-	Redirect_to("Admins.php");
+	Redirect_to("hospitals.php");
 
  }
- elseif (CheckHospitalExitsOrNot($Username)) {
+ elseif (CheckDoctorExitsOrNot($Username)) {
 	$_SESSION["ErrorMessage"]="Username already in use";
-	Redirect_to("Admins.php");}
+	Redirect_to("hospitals.php");}
 	
-elseif(strlen($Password)<4){
+ elseif(strlen($Password)<4){
  	$_SESSION["ErrorMessage"]="Password should be atleast 4 characters";
- 	Redirect_to("Admins.php");
+ 	Redirect_to("hospitals.php");
 
  }elseif($Password!==$ConfirmPassword){
  	$_SESSION["ErrorMessage"]="Password / ConfirmPassword does not match";
- 	Redirect_to("Admins.php");
+ 	Redirect_to("hospitals.php");
 
  }
  else{
 	global $ConnectingDB;
-	$Query="INSERT INTO hospitallogin(datetime,username,password,addedby)VALUES('$DateTime','$Username','$Password','$Admin')";
+	$Query="INSERT INTO doctors(datetime,username,password,addedby)VALUES('$DateTime','$Username','$Password','$Admin')";
 	$Execute=mysql_query($Query);
 	if($Execute){
-		$_SESSION["SuccessMessage"] = "Hospital Added Successfully";
-		Redirect_to("Admins.php");
+		$_SESSION["SuccessMessage"] = "Doctor Added Successfully";
+		Redirect_to("hospitals.php");
 	}else{
-		$_SESSION["ErrorMessage"]="Hospital failed to add";
- 	Redirect_to("Admins.php");
+		$_SESSION["ErrorMessage"]="Doctor failed to add";
+ 	Redirect_to("hospitals.php");
 	}
 }
 }
@@ -52,7 +98,7 @@ elseif(strlen($Password)<4){
 <!DOCTYPE>
 <html>
 	<head>
-		<title>Manage Hospitals</title>
+		<title>Manage</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script scr="js/bootstrap.min.js"></script>
@@ -108,26 +154,26 @@ elseif(strlen($Password)<4){
 					<br>
 					<br>
 					<!-- <h1>Blocked Reviewer</h1> -->
-					<ul  id="side_Menu" class="nav nav-pills nav-stacked">
+					<ul  id="side_Menu" class="nav nav-pills nav-stacked"><!-- 
 						<li><a href="Dashboard.php">
 							<span class="glyphicon glyphicon-th"></span>
-						&nbsp;Manage Users</a></li>
+						&nbsp;Dashboard</a></li> -->
 						<!-- <li><a href="AddNewPost.php">
 							<span class="glyphicon glyphicon-list-alt"></span>
 						&nbsp;Add New Record</a></li> -->
 						<!-- <li><a href="Categories.php">
 							<span class="glyphicon glyphicon-tags"></span>
 						&nbsp;Categories</a></li> -->
-						<li class="active"><a href="Admins.php">
+						<li class="active"><a href="hospitals.php">
 							<span class="glyphicon glyphicon-user"></span>
-						&nbsp;Manage Hospitals</a></li>
+						&nbsp;Manage</a></li>
 						<!-- <li><a href="Comments.php">
 							<span class="glyphicon glyphicon-comment"></span>
 						&nbsp;Comments</a></li>
 						<li><a href="#">
 							<span class="glyphicon glyphicon-equalizer"></span>
 						&nbsp;Live Blog</a></li> -->
-						<li><a href="Logout.php">
+						<li><a href="Logout_hospital.php">
 							<span class="glyphicon glyphicon-log-out"></span>
 						&nbsp;Logout</a></li>
 					</ul>
@@ -135,12 +181,12 @@ elseif(strlen($Password)<4){
 
 				</div><!-- ENDING OF SIDE -->
 				<div class="col-sm-10">
-					<h1>Manage Hospital Access</h1>
+					<h1>Manage Doctors Access</h1>
 					<?php echo Message();
 					echo SuccessMessage();
 					?>
 						<div >
-							<form action="Admins.php" method="Post">
+							<form action="hospitals.php" method="Post">
 								<fieldset>
 									<div class="form-group">
 									<label for="Username"><span class="FieldInfo">UserName:</span></label>
@@ -155,7 +201,7 @@ elseif(strlen($Password)<4){
 									<input class="form-control" type="Password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm Password">
 								</div>
 								<br>
-								<input  class="btn btn-success btn-block" type="Submit" name="Submit" value="Add New Hospital">
+								<input  class="btn btn-success btn-block" type="Submit" name="Submit" value="Add New Doctor">
 								</fieldset>	
 
 
@@ -169,13 +215,14 @@ elseif(strlen($Password)<4){
 								<tr>
 									<th>Sr No.</th>
 									<th>Date & Time</th>
-									<th>Hospital Name</th>
+									<th>Doctor Name</th>
 									<th>Added By</th>
 									<th>Action</th>
 								</tr>
 								<?php
-								global $ConnectingDB;								
-								$ViewQuery="SELECT * FROM hospitallogin ORDER BY datetime desc";
+								global $ConnectingDB;
+								$Admin=$_SESSION["Username"];
+								$ViewQuery="SELECT * FROM doctors WHERE addedby='$Admin' ORDER BY datetime desc";
 								$Execute=mysql_query($ViewQuery);
 								$SrNo=0;
 								while($DataRows =mysql_fetch_array($Execute)) {
@@ -190,8 +237,85 @@ elseif(strlen($Password)<4){
 		<td><?php echo $DateTime; ?></td>
 		<td><?php echo $Username; ?></td>
 		<td><?php echo $Admin; ?></td>
-		<td><a href="DeleteAdmin.php?id=<?php echo $Id; ?>">
+		<td><a href="DeleteDoctor.php?id=<?php echo $Id; ?>">
 			<span class="btn btn-danger">Delete</span></a></td>
+</tr>
+
+							<?php } ?>
+							</table>
+						</div> 
+						<br>
+		<hr>
+		<h1>Admit Patient</h1>
+		<form action="hospitals.php" method="Post">
+								<fieldset>
+									<div class="form-group">
+									<label for="Username"><span class="FieldInfo">Aadhar No.:</span></label>
+									<input class="form-control"type="text" name="aadhar" id="aadhar" placeholder="Aadhar No.">
+								</div>
+								<br>
+								<input  class="btn btn-success btn-block" type="Submit" name="Submit1" value="Admit Patient">
+								</fieldset>
+		</form>
+		<br>
+		<hr>
+		<h1>View Patient Data</h1>
+		<div class="table-responsive">
+							<table class="table table-hover">
+								<tr>
+									<th>Sr No.</th>
+									<th>Username</th>
+									<th>Email</th>
+									<th>Aadhar No.</th>
+									<th>Name</th>
+									<th>Phone No.</th>
+									<th>DOB</th>
+									<th>Gender</th>
+									<th>Address</th>
+									<th>Medical History</th>
+									<th>Insurance</th>
+									<th>Doctor</th>
+									<th>Treatment</th>
+									<th>Prescription</th>
+								</tr>
+								<?php
+								global $ConnectingDB;
+								$Id=$_SESSION["Username"];
+								$ViewQuery="SELECT * FROM user_panel WHERE admittedto='$Id'";
+								$Execute=mysql_query($ViewQuery);
+								$SrNo=0;
+								while($DataRows =mysql_fetch_array($Execute)) {
+									$Id=$DataRows["id"];
+									$Username=$DataRows["username"];
+									$Email=$DataRows["email"];
+									$Aadhar=$DataRows["adhar"];
+									$Name=$DataRows["name"];
+									$Phone=$DataRows["phone"];
+									$Dob=$DataRows["dob"];
+									$Gender=$DataRows["gender"];
+									$Address=$DataRows["address"];
+									$History=$DataRows["history"];
+									$Insurance=$DataRows["insurance"];
+									$Doctor=$DataRows["currentdoctor"];
+									$Treatment=$DataRows["treatment"];
+									$Prescription=$DataRows["prescription"];
+									$SrNo++;
+?>
+<tr>
+		<td><?php echo $SrNo; ?></td>
+		<td><?php echo $Username; ?></td>
+		<td><?php echo $Email; ?></td>
+		<td><?php echo $Aadhar; ?></td>
+		<td><?php echo $Name; ?></td>
+		<td><?php echo $Phone; ?></td>
+		<td><?php echo $Dob; ?></td>
+		<td><?php echo $Gender; ?></td>
+		<td><?php echo $Address; ?></td>
+		<td><?php echo $History; ?></td>
+		<td><?php echo $Insurance; ?></td>
+		<td><?php echo $Doctor; ?></td>
+		<td><?php echo $Treatment; ?></td>
+		<td><?php echo $Prescription; ?></td>
 </tr>
 
 							<?php } ?>
@@ -200,7 +324,7 @@ elseif(strlen($Password)<4){
 				</div><!-- ENDING OF MAIN -->
 			</div><!-- ROW -->
 		</div><!-- Container Fluid -->
-		
+
 		<div id="Footer">
 			<hr><p>Electronic Health Record Managment |  EHRM  | &copy;2018-2020 ---- All Rights Reserved.</p>
 			<a style="color: white; text-decoration: none; cursor: pointer; font-weight: bold;">

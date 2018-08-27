@@ -5,14 +5,14 @@
 if(isset($_GET['id'])){
 	$IdFromURL=$_GET["id"];
 	$ConnectingDB;
-	$Query="DELETE FROM hospitallogin WHERE id='$IdFromURL' ";
+	$Query="DELETE FROM doctors WHERE id='$IdFromURL' ";
 	$Execute=mysql_query($Query);
 	if($Execute){
-		$_SESSION["SuccessMessage"]="Hospital Deleted Successfully";
-		Redirect_to("Admins.php?id=($PostId)");
+		$_SESSION["SuccessMessage"]="Doctor Deleted Successfully";
+		Redirect_to("hospitals.php?id=($PostId)");
 	}else{
 		$_SESSION["ErrorMessage"]="Something went wrong. Try Again !";
-		Redirect_to("Admins.php?id=($PostId)");
+		Redirect_to("hospitals.php?id=($PostId)");
 	}
 }
 

@@ -10,6 +10,7 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
+   
 </head>
 <body>
 
@@ -39,10 +40,9 @@
 
                                 <ul class="nav navbar-nav navbar-right">
                                     <li><a class="menu active" href="#home">Home</a></li>
-                                    <li><a class="menu" href="#about">Medical Info</a></li>
-                                    <li><a class="menu" href="#service">Insurance Details</a></li>
-                                    <!-- <li><a class="menu" href="#contact">Register</a></li> -->
-                                    <li><a class="menu" href="User_Registration.php">Sign-Out</a></li>
+                                    <li><a class="menu" href="#about">About Us</a></li>
+                                    <li><a class="menu" href="#service">Register</a></li>
+                                    <li><a class="menu" href="User_Registration.php">Sign In</a></li>
                                 </ul>
                             </div><!-- /navbar-collapse -->
                         </div><!-- / .container-fluid -->

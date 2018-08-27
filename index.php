@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-xs-5 header-logo">
                     <br>
-                    <a href="Default.aspx"><img src="imgs/logo1.png" alt="" class="img-responsive logo"></a>
+                    <a href="index.php"><img src="imgs/logo1.png" alt="" class="img-responsive logo"></a>
                 </div>
                 <div class="col-md-7">
                     <nav class="navbar navbar-default">
@@ -38,17 +38,16 @@
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                                 <ul class="nav navbar-nav navbar-right">
-                                    <li><a class="menu active" href="#home">Home</a></li>
-                                    <li><a class="menu" href="#about">Medical Info</a></li>
-                                    <li><a class="menu" href="#service">Insurance Details</a></li>
+                                    <li><a class="menu active" href="index.php">Home</a></li>
+                                    <li><a class="menu" href="#about">About Us</a></li>
+                                    <li><a class="menu" href="User_Registration.php">Register</a></li>
                                     <!-- <li><a class="menu" href="#contact">Register</a></li> -->
                                     <!-- <li><a class="menu" href="User_Registration.php">Sign-Out</a></li> -->
                                     <li><a class="menu" data-toggle="dropdown">Sign In
-                                    <span class="caret"></span>
                                     <ul class="dropdown-menu">
-                                      <li><a href="#">Patient</a></li>
-                                      <li><a href="#">Admin</a></li>
-                                      <li><a href="#">Others</a></li>
+                                      <li><a href="User_Login.php">Patient</a></li>
+                                      <li><a href="Login.php">Admin</a></li>
+                                      <li><a href="others.html">Others</a></li>
                                     </ul>
                             </div><!-- /navbar-collapse -->
                         </div><!-- / .container-fluid -->
@@ -57,25 +56,12 @@
             </div>
         </div>
     </header> <!-- end of header area -->
-    <section class="slider" id="home">
-        <div class="container-fluid">
-            <center>
-            	
-    <img id="top" src="top.png" alt="">
-    
-    <br />
-    <br />
-    <br />
-    <br />
-
-    <br />
-    <br />
-    <br />
-    <br />
-	<img id="bottom" src="bottom.png" alt=""></center>
-        </div>
-    </section><!-- end of slider section -->
     <!-- about section -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <section class="about text-center" id="about">
         <div class="container">
             <div class="row">
@@ -88,10 +74,9 @@
                         </div>
                         <div class="about-details">
                             <div class="pentagon-text">
-                                <h1>*</h1>
                             </div>
-                            <h3>sample text</h3>
-                            <p>sample text</p>
+                            <h3>Medical Services</h3>
+                            <p>Doctors, Patient, Medical Record etc.</p>
                         </div>
                     </div>
                 </div>
@@ -102,10 +87,9 @@
                         </div>
                         <div class="about-details">
                             <div class="pentagon-text">
-                                <h1>*</h1>
                             </div>
-                            <h3>sample text</h3>
-                            <p>sample text</p>
+                            <h3>Pharmacy</h3>
+                            <p>Prescriptions, Pharmacist etc.</p>
                         </div>
                     </div>
                 </div>
@@ -116,10 +100,9 @@
                         </div>
                         <div class="about-details">
                             <div class="pentagon-text">
-                                <h1>*</h1>
                             </div>
-                            <h3>sample text</h3>
-                            <p>sample text</p>
+                            <h3>Insurance</h3>
+                            <p>Buy Insurance, Insurance Details etc.</p>
                         </div>
                     </div>
                 </div>
@@ -175,87 +158,17 @@
             </div>
         </div>
     </section><!-- end of service section -->
-    <!-- team section -->
-    <section class="team" id="team">
-        <div class="container">
-            <div class="row">
-                <div class="team-heading text-center">
-                    <h2>sample text</h2>
-                    <h4>sample text</h4>
-                </div>
-                <div class="col-md-2 single-member col-sm-4">
-                    <div class="person">
-                        <img class="img-responsive" src="imgs/member1.jpg" alt="member-1">
-                    </div>
-                    <div class="person-detail">
-                        <div class="arrow-bottom"></div>
-                        <h3>sample text</h3>
-                        <p>sample text</p>
-                    </div>
-                </div>
-                <div class="col-md-2 single-member col-sm-4">
-                    <div class="person-detail">
-                        <div class="arrow-top"></div>
-                        <h3>sample text</h3>
-                        <p>sample text</p>
-                    </div>
-                    <div class="person">
-                        <img class="img-responsive" src="imgs/member2.jpg" alt="member-2">
-                    </div>
-                </div>
-                <div class="col-md-2 single-member col-sm-4">
-                    <div class="person">
-                        <img class="img-responsive" src="imgs/member3.jpg" alt="member-3">
-                    </div>
-                    <div class="person-detail">
-                        <div class="arrow-bottom"></div>
-                        <h3>sample text</h3>
-                        <p>sample text</p>
-                    </div>
-                </div>
-                <div class="col-md-2 single-member col-sm-4">
-                    <div class="person-detail">
-                        <div class="arrow-top"></div>
-                        <h3>sample text</h3>
-                        <p>sample text</p>
-                    </div>
-                    <div class="person">
-                        <img class="img-responsive" src="imgs/member4.jpg" alt="member-4">
-                    </div>
-                </div>
-                <div class="col-md-2 single-member col-sm-4">
-                    <div class="person">
-                        <img class="img-responsive" src="imgs/member5.jpg" alt="member-5">
-                    </div>
-                    <div class="person-detail">
-                        <div class="arrow-bottom"></div>
-                        <h3>sample text</h3>
-                        <p>sample text</p>
-                    </div>
-                </div>
-                <div class="col-md-2 single-member col-sm-4">
-                    <div class="person-detail">
-                        <div class="arrow-top"></div>
-                        <h3>sample text</h3>
-                        <p>sample text</p>
-                    </div>
-                    <div class="person">
-                        <img class="img-responsive" src="imgs/member6.jpg" alt="member-5">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section><!-- end of team section -->
+    
     <!-- footer starts here -->
     <footer class="footer clearfix">
         <div class="container">
             <div class="row">
                 <div class="col-xs-6 footer-para">
-                    <p>&copy;sample text</p>
+                    <p>&copy;Christ University | Dept. Of CS</p>
                 </div>
             </div>
         </div>
-        <link href="https://snatchbot.me/sdk/webchat.css" rel="stylesheet" type="text/css"><script src="https://snatchbot.me/sdk/webchat.min.js"></script><script> Init('?botID=25182&amp;appID=ZccN1sRvfz9TEuRFJmMA', 600, 600, 'https://dvgpba5hywmpo.cloudfront.net/media/image/xxckm0fH6RKjtoRsvHu7HgH0V', 'bubble', '#00AFF0', 90, 90, 62.99999999999999, '', '0', '#FFFFFF', 1); /* for authentication of its users, you can define your userID (add &amp;userID={login}) */ </script>
+       <!--  <link href="https://snatchbot.me/sdk/webchat.css" rel="stylesheet" type="text/css"><script src="https://snatchbot.me/sdk/webchat.min.js"></script><script> Init('?botID=25182&amp;appID=ZccN1sRvfz9TEuRFJmMA', 600, 600, 'https://dvgpba5hywmpo.cloudfront.net/media/image/xxckm0fH6RKjtoRsvHu7HgH0V', 'bubble', '#00AFF0', 90, 90, 62.99999999999999, '', '0', '#FFFFFF', 1); /* for authentication of its users, you can define your userID (add &amp;userID={login}) */ </script> -->
     </footer>
     <!-- script tags
     ============================================================= -->

@@ -60,7 +60,7 @@ if(empty($Username) || empty($Password)){
 						<span class="icon-bar"></span>
 
 					</button> -->
-	<a class="navbar-brand" href="Blog.php"><img style="margin-top: -14px" src="images/img11.png" width="220" height="50";></a>
+	<a class="navbar-brand" href="index.php"><img style="margin-top: -14px" src="images/img11.png" width="220" height="50";></a>
 				</div>
 				<div class="collapse navbar-collapse" id="collapse">
 		</div>

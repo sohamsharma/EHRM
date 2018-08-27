@@ -20,14 +20,74 @@ function Login(){
 		return true;
 	}
 }
+function Login1(){
+	if(isset($_SESSION["Username"])){
+		return true;
+	}
+}
+function Login2(){
+	if(isset($_SESSION["Username"])){
+		return true;
+	}
+}
+function Login3(){
+	if(isset($_SESSION["Username"])){
+		return true;
+	}
+}
+function Login4(){
+	if(isset($_SESSION["Username"])){
+		return true;
+	}
+}
 function Confirm_Login(){
 	if(!Login()){
 		Redirect_to("Login.php");
 	}
 }
+function Confirm_Login1(){
+	if(!Login1()){
+		Redirect_to("hospitals.php");
+	}
+}
+function Confirm_Login2(){
+	if(!Login2()){
+		Redirect_to("Patient_Mod.php");
+	}
+}
+function Confirm_Login3(){
+	if(!Login3()){
+		Redirect_to("doctor_panel.php");
+	}
+}
+function Confirm_Login4(){
+	if(!Login4()){
+		Redirect_to("pharmacy_panel.php");
+	}
+}
 function CheckEmailExitsOrNot($Email){
 	global $ConnectingDB;
 	$Query="SELECT * FROM user_panel WHERE email='$Email'";
+	$Execute=mysql_query($Query);
+	if(mysql_num_rows($Execute)>0){
+		return true;
+	}else{
+		return false;
+	}
+}
+function CheckHospitalExitsOrNot($Username){
+	global $ConnectingDB;
+	$Query="SELECT * FROM hospitallogin WHERE username='$Username'";
+	$Execute=mysql_query($Query);
+	if(mysql_num_rows($Execute)>0){
+		return true;
+	}else{
+		return false;
+	}
+}
+function CheckDoctorExitsOrNot($Username){
+	global $ConnectingDB;
+	$Query="SELECT * FROM doctors WHERE username='$Username'";
 	$Execute=mysql_query($Query);
 	if(mysql_num_rows($Execute)>0){
 		return true;
@@ -85,7 +145,7 @@ function Login_Attempts($Email,$Password){
 }
 function ConfirmingAccountActiveStatus(){
 	global $ConnectingDB;
-	$Query="SELECT * FROM user_panel WHERE active='ON'";
+	$Query="SELECT * FROM user_panel WHERE token!='NULL'";
 	$Execute=mysql_query($Query);
 	if(mysql_num_rows($Execute)>0){
 		return true;

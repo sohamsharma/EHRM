@@ -3,42 +3,33 @@
 <?php require_once("include/Functions.php"); ?>
 <?php
 if(isset($_POST["Submit"])){
-$Email=mysql_real_escape_string($_POST["Email"]);
+$Username=mysql_real_escape_string($_POST["Username"]);
 $Password=mysql_real_escape_string($_POST["Password"]);
-if(empty($Email) || empty($Password)){
+if(empty($Username) || empty($Password)){
 	$_SESSION["ErrorMessage"]="All Fields must be filled";
-	Redirect_to("User_Login.php");
+	Redirect_to("pharmacy_login.php");
 
  }
  else{
- 		if(ConfirmingAccountActiveStatus()){
-		 $Found_Account=Login_Attempts($Email,$Password);
-		 $_SESSION["User_Id"]=$Found_Account["id"];
-		 $_SESSION["Username"]=$Found_Account["email"];
- 		if($Found_Account){
+		 $Query="SELECT * FROM pharmacy WHERE username='$Username' && password='$Password'";
+		 $_SESSION["Username"]=$Username;
+		 $Execute=mysql_query($Query);
+		 if(mysql_num_rows($Execute)>0){
 			$_SESSION["SuccessMessage"]="Welcome {$_SESSION["Username"]}";
- 		Redirect_to("Patient_Mod.php");	
- 		}else{
- 		$_SESSION["ErrorMessage"]="Invalid Email / Password";
-	Redirect_to("User_Login.php");
-	
+			Redirect_to("pharmacy_panel.php");
+		 }
+			else{
+ 			$_SESSION["ErrorMessage"]="Invalid Username And Password";
+	Redirect_to("pharmacy_login.php");
  		}
- 		}else{
- 			$_SESSION["ErrorMessage"]="Account Confirmation Required";
-	Redirect_to("User_Login.php");
- 		}
- 		}
-	}
-
-
-
+	}	
+}	
 ?>
-
 
 <!DOCTYPE>
 <html>
 	<head>
-		<title>Sign-In</title>
+		<title>Login</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script scr="js/bootstrap.min.js"></script>
@@ -85,20 +76,20 @@ if(empty($Email) || empty($Password)){
 					<?php echo Message();
 					echo SuccessMessage();
 					?>
-					<h2>Sign-In Now !</h2>
+					<h2>Welcome Back !</h2>
 						<div >
-							<form action="User_Login.php" method="Post">
+							<form method="Post">
 								<fieldset>
 									<div class="form-group">
-									<label for="Email"><span class="FieldInfo">Email:</span></label>
+										
+									<label for="Username"><span class="FieldInfo">UserName:</span></label>
 									<div class="input-group input-group-lg" >
 											<span class="input-group-addon">
-												<span class="glyphicon glyphicon-edit text-primary"></span>
+												<span class="glyphicon glyphicon-envelope text-primary"></span>
 											</span>
-									<input class="form-control"type="text" name="Email" id="Email" placeholder="Email">
+									<input class="form-control"type="text" name="Username" id="Username" placeholder="Username">
 									</div>
 								</div>
-
 								<div class="form-group">
 									<label for="Password"><span class="FieldInfo">Password:</span></label>
 									<div class="input-group input-group-lg">
@@ -109,7 +100,7 @@ if(empty($Email) || empty($Password)){
 								</div>
 								</div>
 								<br>
-								<input  class="btn btn-info btn-block" type="Submit" name="Submit" value="Submit">
+								<input  class="btn btn-info btn-block" type="Submit" name="Submit" value="Login">
 								</fieldset>	
 
 
