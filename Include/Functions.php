@@ -40,6 +40,11 @@ function Login4(){
 		return true;
 	}
 }
+function Login5(){
+	if(isset($_SESSION["Username"])){
+		return true;
+	}
+}
 function Confirm_Login(){
 	if(!Login()){
 		Redirect_to("Login.php");
@@ -63,6 +68,11 @@ function Confirm_Login3(){
 function Confirm_Login4(){
 	if(!Login4()){
 		Redirect_to("pharmacy_panel.php");
+	}
+}
+function Confirm_Login5(){
+	if(!Login5()){
+		Redirect_to("insurance_panel.php");
 	}
 }
 function CheckEmailExitsOrNot($Email){

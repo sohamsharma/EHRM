@@ -1,3 +1,8 @@
+<?php require_once("Include/DB.php"); ?>
+<?php require_once("include/Sessions.php"); ?>
+<?php require_once("include/Functions.php"); ?>
+<?php Confirm_Login2(); ?>
+
 <html lang="en">
 <head>
     <title>Electronic Health Record Management System</title>
@@ -44,7 +49,7 @@
                                     <li><a class="menu" href="Pat_BuyIns.php">Buy Insurance</a></li>
                                     <li><a class="menu" href="Pat_MedHist.php">Medical History</a></li>
                                     <li><a class="menu" href="Pat_Pres.php">Prescription</a></li>
-                                    <!-- <li><a class="menu" href="Pat_Pharm.html">Pharmacy</a></li>  --> 
+                                    <!-- <li><a class="menu" href="Pat_Pharm.html">Pharmacy</a></li>   -->
                                     <li><a class="menu" href="User_logout.php">Log Out</a></li>  
                                 </ul>
                             </div><!-- /navbar-collapse -->
@@ -70,6 +75,41 @@
     <br />
     <br />
             </center>
+            <div class="table-responsive">
+            <?php echo Message();
+					echo SuccessMessage();
+					?>
+							<table class="table table-hover">
+								<tr>
+									<th>Sr No.</th>
+									<th>Insurance Id.</th>
+									<th>Features</th>
+									<th>Cost</th>
+									<th>Action</th>
+								</tr>
+								<?php
+								global $ConnectingDB;								
+								$ViewQuery="SELECT * FROM insuranceplan";
+								$Execute=mysql_query($ViewQuery);
+								$SrNo=0;
+								while($DataRows =mysql_fetch_array($Execute)) {
+									$insuranceid=$DataRows["insuranceid"];
+									$features=$DataRows["features"];
+									$cost=$DataRows["cost"];
+									$SrNo++;
+?>
+<tr>
+		<td><?php echo $SrNo; ?></td>
+		<td><?php echo $insuranceid; ?></td>
+		<td><?php echo $features; ?></td>
+		<td><?php echo $cost; ?></td>
+		<td><a href="selectinsurance.php?insuranceid=<?php echo $insuranceid; ?>">
+			<span class="btn btn-danger">Buy</span></a></td>
+</tr>
+
+							<?php } ?>
+							</table>
+						</div> 
         </div>
         
     </section>
